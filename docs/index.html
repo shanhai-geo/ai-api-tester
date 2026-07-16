@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI大模型在线测试 - 一键测试所有国产大模型 | 山海智能</title>
+<meta name="description" content="免费在线测试通义千问、文心一言、智谱GLM、讯飞星火、Kimi、MiniMax等国产AI大模型。一键对比，选择最适合你的。">
+<meta property="og:title" content="AI大模型在线测试工具 - 山海智能">
+<meta property="og:description" content="一键测试所有国产AI大模型，免费使用">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,PingFang SC,Microsoft YaHei,sans-serif;background:#0f0f1a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+.hdr{text-align:center;padding:40px 20px 20px;width:100%;max-width:700px}
+.hdr h1{font-size:1.8em;margin-bottom:8px;background:-webkit-linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr p{color:#888;font-size:.95em}
+.chat{width:100%;max-width:700px;flex:1;padding:0 20px 20px;display:flex;flex-direction:column}
+.msgs{flex:1;overflow-y:auto;margin-bottom:16px;padding:16px;background:rgba(255,255,255,.03);border-radius:12px;min-height:300px}
+.msg{margin-bottom:12px;padding:10px 14px;border-radius:10px;max-width:85%}
+.msg.user{background:rgba(255,215,0,.1);margin-left:auto;text-align:right}
+.msg.ai{background:rgba(255,255,255,.06)}
+.input-area{display:flex;gap:8px}
+.input-area input{flex:1;padding:12px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:1em;outline:none}
+.input-area input:focus{border-color:#ffd700}
+.input-area button{padding:12px 20px;background:-webkit-linear-gradient(135deg,#ffd700,#ff8c00);border:none;border-radius:10px;color:#000;font-weight:700;cursor:pointer;font-size:1em}
+.models{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.models span{padding:4px 10px;background:rgba(255,215,0,.1);border-radius:20px;font-size:.8em;color:#ffd700}
+.ft{text-align:center;padding:16px;color:#555;font-size:.8em}
+.ft a{color:#ffd700;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="hdr">
+<h1>AI大模型在线测试</h1>
+<p>免费测试所有国产AI大模型 · 由山海智能提供支持</p>
+<div class="models">
+<span>通义千问</span><span>文心一言</span><span>智谱GLM</span><span>讯飞星火</span><span>Kimi</span><span>MiniMax</span><span>智能路由</span>
+</div>
+</div>
+<div class="chat">
+<div class="msgs" id="msgs">
+<div class="msg ai">你好！我是山海智能AI助手。你可以问我任何问题，我会通过智能路由选择最优的AI模型来回答你。</div>
+</div>
+<div class="input-area">
+<input type="text" id="inp" placeholder="输入你的问题..." onkeypress="if(event.key==='Enter')send()">
+<button onclick="send()">发送</button>
+</div>
+</div>
+<div class="ft">
+Powered by <a href="https://shanhai-geo.github.io">山海智能</a> | 
+<a href="https://shanhai-geo.github.io/api-service.html">API文档</a> | 
+<a href="https://shanhai-geo.github.io/compare-ai-api.html">模型对比</a>
+</div>
+<script>
+var EP="https://api-proxy-daezqenetk.cn-beijing.fcapp.run/v1/chat/completions";
+var KEY="03daf1d1aef84c43bb36bc7d92678f0e.pZT5orK5lqkd4Vxt";
+var hist=[];
+async function send(){
+var inp=document.getElementById("inp");
+var q=inp.value.trim();if(!q)return;
+inp.value="";
+var m=document.getElementById("msgs");
+m.innerHTML+='<div class="msg user">'+q+'</div>';
+hist.push({role:"user",content:q});
+try{
+var r=await fetch(EP,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+KEY},body:JSON.stringify({model:"auto",messages:[{role:"system",content:"你是山海智能AI助手，提供智能API接口服务咨询，年费298元包年不限量。简洁回答。"},...hist],max_tokens:500})});
+var d=await r.json();
+var a=d.choices[0].message.content;
+hist.push({role:"assistant",content:a});
+m.innerHTML+='<div class="msg ai">'+a+'</div>';
+}catch(e){m.innerHTML+='<div class="msg ai">网络繁忙，请稍后再试</div>'}
+m.scrollTop=m.scrollHeight;
+}
+</script>
+</body>
+</html>
