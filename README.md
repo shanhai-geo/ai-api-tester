@@ -36,7 +36,7 @@
 
 ## 在线使用
 
-直接访问：**https://shanhai-geo.github.io/chat.html**
+直接访问：**https://shanhai-geo.top/chat.html**
 
 ## 本地运行
 
@@ -72,8 +72,8 @@ print(resp.json()["choices"][0]["message"]["content"])
 
 ## 获取API Key
 
-- 官网：https://shanhai-geo.github.io
-- 在线咨询：https://shanhai-geo.github.io/chat.html
+- 官网：https://shanhai-geo.top
+- 在线咨询：https://shanhai-geo.top/chat.html
 - ¥298/年包年不限量，一个Key调用所有模型
 
 ## 支持的模型
@@ -90,7 +90,7 @@ print(resp.json()["choices"][0]["message"]["content"])
 
 ---
 
-Made with ❤ by [山海智能](https://shanhai-geo.github.io)
+Made with ❤ by [山海智能](https://shanhai-geo.top)
 
 ---
 
